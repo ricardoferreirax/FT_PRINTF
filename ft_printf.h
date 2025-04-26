@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:13:26 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 22:41:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/04/26 23:53:05 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdlib.h>
+# include <stddef.h>
 
 int		ft_printf(const char *format, ...);
 int		ft_handle_format(char c, va_list args);

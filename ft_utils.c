@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:15:19 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 23:38:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/04/26 23:54:12 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_hexalen(unsigned int num)
+int	ft_hexa_len(unsigned int num)
 {
 	unsigned int	len;
 
