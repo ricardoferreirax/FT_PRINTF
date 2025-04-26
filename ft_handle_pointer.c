@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:27:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 23:11:50 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/04/26 23:39:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ static int	digits_base(unsigned long long n)
 
 char	*ft_pointer_base(unsigned long long n)
 {
-	int		p;
-	char	*str;
-	int		base_len;
-	const char	*base_str = "0123456789abcdef";
+	int			p;
+	char		*str;
+	int			base_len;
+	const char	*base_str;
 
+	base_str = "0123456789abcdef";
 	base_len = 16;
 	p = digits_base(n);
 	str = (char *)malloc(sizeof(char) * (p + 1));

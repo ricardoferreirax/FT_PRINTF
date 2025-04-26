@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:50:25 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 23:14:44 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/04/26 23:38:13 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,3 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return (len);
 }
-

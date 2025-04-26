@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:12:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 23:17:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/04/26 23:39:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_lowerhexa(unsigned int n)
 	unsigned int	num;
 
 	num = n;
-	x = ft_hexa_len(num);
+	x = ft_hexalen(num);
 	str = malloc(sizeof(char) * (x + 1));
 	if (!str)
 		return (NULL);

@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:38:11 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 23:17:59 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/04/26 23:39:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	count_udigits(unsigned int n)
+static int	ft_udigits(unsigned int n)
 {
 	int	len;
 
@@ -32,7 +32,7 @@ char	*ft_uitoa(unsigned int n)
 	char	*str;
 	int		u;
 
-	u = count_udigits(n);
+	u = ft_udigits(n);
 	str = (char *)malloc(sizeof(char) * (u + 1));
 	if (!str)
 		return (NULL);

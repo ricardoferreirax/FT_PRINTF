@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:23:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 23:16:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/04/26 23:37:38 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_signed_len(long int num)
+static int	ft_numberlen(long int num)
 {
 	int	len;
 
@@ -39,7 +39,7 @@ char	*ft_itoa(int n)
 	long int	num;
 
 	num = n;
-	i = ft_signed_len(num);
+	i = ft_numberlen(num);
 	str = malloc(sizeof(char) * (i + 1));
 	if (!str)
 		return (NULL);
