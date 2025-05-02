@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:21:58 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 23:37:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/02 11:37:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_print_char(char c)
+int	ft_printchar(char c)
 {
 	write(1, &c, 1);
 	return (1);
@@ -23,5 +23,5 @@ int	ft_handle_char(va_list args)
 	char	c;
 
 	c = (char)va_arg(args, int);
-	return (ft_print_char(c));
+	return (ft_printchar(c));
 }

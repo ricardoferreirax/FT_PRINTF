@@ -6,35 +6,33 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:27:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 23:39:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/02 11:42:17 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	digits_base(unsigned long long n)
+static int	ft_xbasedigits(unsigned long long n)
 {
-	int	count;
+	int	len;
 
-	count = 1;
+	len = 1;
 	while (n >= 16)
 	{
 		n /= 16;
-		count++;
+		len++;
 	}
-	return (count);
+	return (len);
 }
 
-char	*ft_pointer_base(unsigned long long n)
+char	*ft_ulltohex(unsigned long long n)
 {
 	int			p;
 	char		*str;
-	int			base_len;
-	const char	*base_str;
+	const char	*base;
 
-	base_str = "0123456789abcdef";
-	base_len = 16;
-	p = digits_base(n);
+	base = "0123456789abcdef";
+	p = ft_xbasedigits(n);
 	str = (char *)malloc(sizeof(char) * (p + 1));
 	if (!str)
 		return (NULL);
@@ -43,8 +41,8 @@ char	*ft_pointer_base(unsigned long long n)
 		str[0] = '0';
 	while (n > 0)
 	{
-		str[--p] = base_str[n % base_len];
-		n /= base_len;
+		str[--p] = base[n % 16];
+		n /= 16;
 	}
 	return (str);
 }
@@ -57,12 +55,12 @@ int	ft_handle_pointer(va_list args)
 
 	addr = va_arg(args, unsigned long long);
 	if (addr == 0)
-		return (ft_print_str("(nil)"));
-	str = ft_pointer_base(addr);
+		return (ft_printstring("(nil)"));
+	str = ft_ulltohex(addr);
 	if (!str)
 		return (0);
-	len = ft_print_str("0x");
-	len += ft_print_str(str);
+	len = ft_printstring("0x");
+	len += ft_printstring(str);
 	free(str);
 	return (len);
 }

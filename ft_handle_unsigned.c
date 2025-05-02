@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:38:11 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 23:39:46 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/02 11:38:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_handle_unsigned(va_list args)
 	str = ft_uitoa(u);
 	if (!str)
 		return (0);
-	len = ft_print_str(str);
+	len = ft_printstring(str);
 	free(str);
 	return (len);
 }

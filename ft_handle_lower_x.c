@@ -6,20 +6,35 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:12:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 23:51:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/02 11:40:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_lowerhexa(unsigned int n)
+static int	ft_xdigits(unsigned int num)
+{
+	unsigned int	len;
+
+	len = 0;
+	if (num == 0)
+		return (1);
+	while (num != 0)
+	{
+		num /= 16;
+		len++;
+	}
+	return (len);
+}
+
+char	*ft_hexlower(unsigned int n)
 {
 	char			*str;
 	int				x;
 	unsigned int	num;
 
 	num = n;
-	x = ft_hexa_len(num);
+	x = ft_xdigits(num);
 	str = malloc(sizeof(char) * (x + 1));
 	if (!str)
 		return (NULL);
@@ -45,10 +60,10 @@ int	ft_handle_hexlower(va_list args)
 	int				len;
 
 	un = va_arg(args, unsigned int);
-	str = ft_lowerhexa(un);
+	str = ft_hexlower(un);
 	if (!str)
 		return (0);
-	len = ft_print_str(str);
+	len = ft_printstring(str);
 	free(str);
 	return (len);
 }

@@ -232,23 +232,21 @@ int	ft_printf(const char *format, ...)
 	int		len;
 	size_t	i;
 
-	if (!format || (*format == '%' && !format[1]))
-		return (-1);
-	va_start(args, format);
 	i = 0;
 	len = 0;
+	va_start(args, format);
+	if (!format || (format[0] == '%' && format[1] == '\0'))
+		return (-1);
 	while (format[i])
 	{
 		if (format[i] == '%' && format[i + 1])
 		{
-			len += ft_handle_format(format[++i], args);
 			i++;
+			len += ft_handle_format(format[i], args);
 		}
 		else
-		{
 			len += ft_print_char(format[i]);
-			i++;
-		}
+		i++;
 	}
 	va_end(args);
 	return (len);
@@ -482,8 +480,8 @@ Dentro do while, há duas situações possíveis:
 
 					b1) Declaração - char *ft_lowerhexa(unsigned int n)
 
-					Objetivo: converter o número inteiro n numa string que representa o número em base
-							  hexadecimal (base 16) com letras minúsculas (0-9, a-f).
+					Objetivo: converter o número inteiro positivo n numa string para a sua representação hexadecimal
+							  (base 16) em letras minúsculas (0-9, a-f).
 
 					Retorno: retorna um char * que aponta para a string hexadecimal (o número convertido
 					         para hexadecimal) para que depois possa ser utilizado para a impressão na
@@ -497,6 +495,8 @@ Dentro do while, há duas situações possíveis:
 						   Durante o while, cada posição de str será preenchida com o dígito correspondente. 
 					> x: armazena o número de digitos necessários para representar num em hexadecimal 
 					     (tamanho da string).
+						 Representa a quantidade de digitos hexadecimais que serão necessários para representar
+						 o número n. 
 					> num: é uma cópia de n, para manipular o número sem alterar n diretamente.
 					       Guardamos o valor original n dentro de num, porque:
 
@@ -551,53 +551,93 @@ Dentro do while, há duas situações possíveis:
 										str[x] = (num % 16) + 48;
 									num /= 16;
 								}
-					O loop vai converter o número de base 16 para uma string, caractere a caractere,
-					começando do último digito até ao primeiro. A operação é feita de forma invertida
-					(do fim da string para o começo) de modo a que o resultado final esteja na ordem
-					correta. 
 
-					while (x > 0): O loop continua enquanto ainda tivermos digitos para processar.
+					O loop vai percorrer de trás para a frente a string str, preenchendo a string com
+					os digitos hexadecimais de n, desde os menos significativo até aos mais significativos.
+					A operação é feita de forma invertida (do fim da string para o começo) de modo a que o
+					resultado final esteja na ordem correta. 
 
+					while (x > 0): O loop continua enquanto ainda tivermos digitos para processar, ou seja,
+					               enquanto ainda houver posições a preencher na string str (x > 0).
+					               A variável x contém o número de digitos que o número n terá na base 16. 
+								   O loop garante que vamos preencher todos os digitos da string, da direita
+								   para a esquerda. 
+								   A cada repetição, um digito hexadecimal é calculado e armazenado na posição
+								   correta da string. 
+					
 					x--: Decrementamos x e começamos a preencher a string de trás para a frente.
 						 Primeiro preenchemos a última posição válida (antes do \0), depois a anterior, 
 						 e assim sucessivamente.
 
-					num % 16: Calculamos o dígito em hexadecimal.
-							  Obtemos o resto da divisão de num por 16.
-							  O resto representa o próximo dígito em hexadecimal.
+					num % 16: Calculamos o dígito atual em hexadecimal, que varia de 0 a 15.
+							  Isolamos o último dígito da representação hexadecimal de num, ou seja, obtemos o 
+							  último digito (menos significativo) na representação do número na base 16.
+                              Esse valor (entre 0 e 15) é convertido num caractere ASCII:
 
-					Agora vamos decidir o que vamos escrever na string str que alocamos:
-					
-						> Se o resto (num % 16) for maior que 9: Significa que estamos nas letras do hexadecimal: 
-						  a (10), b (11), ..., f (15).
+        						> Se o valor está entre 0 e 9, converte-se para '0' a '9' com + 48.
 
-                          Para transformar em caracter: > 'a' tem valor ASCII 97.
-														> Por isso, fazemos: (num % 16) + 97 - 10.
+                                > Se o valor está entre 10 e 15, converte-se para 'a' a 'f' com + 87 (ou + 97 - 10).
 
-						  Exemplo:  Se num % 16 == 10, então:
-					                10 + 97 - 10 = 97
-									97 é o código ASCII da letra 'a'.
+							  A seguir, fazemos num /= 16 para preparar o próximo dígito.
 
-    					> Se o resto for de 0 a 9: Queremos um número ('0' a '9').
-												   '0' tem ASCII 48, então fazemos (num % 16) + 48.
+							  Este ciclo repete-se até que o número tenha sido completamente convertido,
+							  ou seja, até num == 0.
 
-						   Exemplo: Se num % 16 == 5, então:
+							  if ((num % 16) > 9): Se o resto (num % 16) for maior do que 9 (ou seja, entre 
+							                       10 e 15) então ele vai ser representado por letras minúsculas.
 
-        							5 + 48 = 53
 
-        							53 é o código ASCII do carácter '5'.
+							  str[x] = (num % 16) + 97 - 10: aqui vamos converter os valores entre 10 a 15 em
+							                                'a' a 'f' e colocar na posição x. 
+														    97 é o valor ASCII da letra 'a'.
 
-					num /= 16: Atualizamos o número.
-							   Dividimos o número por 16.
-							   Isto remove o dígito que acabámos de converter.
-							   Preparamo-nos para o próximo dígito.
+														   Então: str[x] = valor + 'a' - 10
+
+                                                           Por exemplo:
+														   Se num % 16 == 10 então str[x] = 10 + 97 - 10 = 97 → 'a'.
+								
+														   10 -> 'a',
+														   11 -> 'b',
+														   12 -> 'c',
+														   13 -> 'd',
+														   14 -> 'e',
+														   15 -> 'f'.
+							  
+							 else str[x] = (num % 16) + 48: Se o resto for de 0 a 9, então ele vai ser um caractere
+							                                de '0' a '9'.
+                        
+												   			Convertemos o resto para caractere e colocamos na posição x. 
+															Então fazemos (num % 16) + 48.
+
+						   									Exemplo: Se num % 16 == 5, então:
+
+        															 5 + 48 = 53
+
+        							                                 53 é o código ASCII do carácter '5'.
+
+							  num /= 16: Atualizamos o número, dividindo o número por 16 para preparar o próximo dígito
+							             (mais significativo) para a próxima repetição do while. 
+							   			 Isto remove o dígito que acabámos de converter.
+										 Repetimos até o número ser zero. 
+
+							  Exemplo: número decimal 1234
+
+    								   1234 % 16 = 2 → '2'
+    								   1234 / 16 = 77
+
+    								   77 % 16 = 13 → 'd'
+    								   77 / 16 = 4
+
+    								   4 % 16 = 4 → '4'
+    								   4 / 16 = 0
+
+							           → Resultado em hexa: 4d2
 
 					b9) Retornar a string  -  return (str);
 
-    				No final, retornamos a string já completamente construída.
+    				No final, retornamos a string na sua representação hexadecimal.
 
-
-
+				[VOLTANDO AO FT_HANDLE_HEXLOWER]
 
 				c) Verificar se a conversão foi bem sucedida:
 
@@ -605,7 +645,7 @@ Dentro do while, há duas situações possíveis:
 									return (0);
 
 				> Verificamos se str é NULL.
-				> Se for NULL, significa que houve erro na malloc dentro do ft_lowerhexa.
+				> Se for NULL, significa que houve erro no malloc dentro da ft_lowerhexa.
 				> Se isso acontecer, não imprimimos nada e retornamos 0.
 				
 				Importante: Sempre que alocamos memória dinamicamente, temos de proteger o programa 
@@ -634,10 +674,6 @@ Dentro do while, há duas situações possíveis:
 				O ft_printf usa este valor para ir somando o total de caracteres que imprime no final.
 
 																 
-
-
-
-
 		5.1.6. Se o specifier for 'X'
 
 				if (c == 'X')
@@ -657,8 +693,190 @@ Dentro do while, há duas situações possíveis:
     			%p é para imprimir um endereço de memória (ponteiro).
 
     			Chamamos ft_handle_pointer.
-
     			Vai buscar um void * da va_list, converter o valor para hexadecimal com prefixo 0x e imprimir.
+
+				[FT_HANDLE_POINTER]
+
+				int	ft_handle_pointer(va_list args)
+				{
+					unsigned long long	addr;
+					char				*str;
+					int					len;
+
+					addr = va_arg(args, unsigned long long);
+					if (addr == 0)
+						return (ft_print_str("(nil)"));
+					str = ft_ulltohex(addr);
+					if (!str)
+						return (0);
+					len = ft_print_str("0x");
+					len += ft_print_str(str);
+					free(str);
+					return (len);
+				}
+
+				O objetivo desta função é formatar e imprimir um ponteiro void* em formato hexadecimal, com o 
+				prefixo "0x" e retornar o número total de caracteres impressos. 
+
+				Parâmetro: Representa a lista de argumentos variáveis passada para o ft_printf. 
+				           A função extrai dessa lista o argumento correspondente a um ponteiro. 
+
+				Retorno: Um inteiro que representa o número total de caracteres impressos no terminal. 
+
+				a) Declaração das variáveis: 
+
+				   unsigned long long	addr;
+				   char				    *str;
+				   int					 len;
+
+        		   addr: onde será guardado o valor do ponteiro extraído dos argumentos, convertido para 
+				         unsigned long long para representar endereços de memória.
+
+        		   str: ponteiro para a string resultante da conversão do endereço para hexadecimal.
+
+        		   len: variável usada para contar o número total de caracteres impressos.
+
+				b) addr = va_arg(args, unsigned long long);
+
+				   Extrai da lista de argumentos (args) o próximo argumento que deve ser interpretado como 
+				   unsigned long long.
+
+                   A escolha de unsigned long long é comum para representar ponteiros de forma segura e ampla 
+				   (especialmente em arquiteturas 64 bits).
+
+                   Este valor será tratado como o endereço do ponteiro.
+
+				c) 
+
+				    if (addr == 0)
+						return (ft_print_str("(nil)"));
+
+					Se o ponteiro extraído for nulo (NULL), imprime a string "(nil)", como o printf("%p", NULL) padrão faria.
+
+					ft_print_str é uma função auxiliar que imprime uma string e retorna o número de caracteres impressos.
+
+					Neste caso, imprime "5" caracteres e retorna 5.
+
+				d)  
+				
+					str = ft_ulltohex(addr);
+
+					Esta linha converte o endereço (addr) para uma string hexadecimal.
+
+					[FT_ULLTOHEX]
+
+					char	*ft_ulltohex(unsigned long long n)
+					{
+						int			p;
+						char		*str;
+						const char	*base;
+
+						base = "0123456789abcdef";
+						p = ft_numlen_base(n);
+						str = (char *)malloc(sizeof(char) * (p + 1));
+						if (!str)
+							return (NULL);
+						str[p] = '\0';
+						if (n == 0)
+							str[0] = '0';
+						while (n > 0)
+						{
+							str[--p] = base[n % 16];
+							n /= 16;
+						}
+						return (str);
+					}
+
+					A função converte um número inteiro unsigned long long numa string com a representação hexadecimal
+					do número (base 16), uttilizando letras minúsculas ('a' a 'f'). 
+
+					Parâmetro: 
+
+					
+
+					d1) Declaração das variáveis: 
+
+						p: Armazena o número de dígitos necessários para representar n em hexadecimal.
+						str: Ponteiro para a string final (memória alocada dinamicamente).
+						base: Ponteiro constante para a tabela de conversão para hexadecimal.
+
+					d2) Cálculo dos digitos - p = ft_numlen_base(n);
+
+					    Cálcula quantos digitos serão necessários para representar n em hexadecimal. 
+						Guarda o resulta na variável p. 
+
+						int	ft_numlen_base(unsigned long long n)
+						{
+							int	len;
+
+							len = 1;
+							while (n >= 16)
+							{
+								n /= 16;
+								len++;
+							}
+							return (len);
+						}
+
+						A função calcula o número de digitos necessários para escrever esse número na base 16. 
+						Enquanto n for maior ou igual a 16, divide-se por 16 (ou seja, desloca-se "um dígito hexadecimal 
+						para a esquerda").
+						Cada divisão reduz o número e adiciona um dígito à contagem (len++).
+
+    					Exemplo:	n = 255 → 255 / 16 = 15 → len = 2
+
+        							255 = ff em hexadecimal → 2 dígitos
+
+					d3) Alocação
+
+
+
+
+
+				e) 
+
+					if (!str)
+						return (0);
+
+    				Verifica se a alocação falhou.
+
+    				Se ft_ulltohex retornou NULL (falha de malloc), a função retorna 0, indicando que nada foi impresso.
+
+   					Uma forma de proteger o programa contra segmentation faults ou comportamento indefinido.
+
+				f) len = ft_print_str("0x");
+
+                   Imprime o prefixo "0x" (indica que o número é hexadecimal) e armazena o número de caracteres impressos
+				   (que são 2) em len.
+
+				g) len += ft_print_str(str);
+
+    			   Imprime a string hexadecimal do endereço (str) e soma a quantidade de caracteres impressos ao total len.
+
+				h) free(str);
+
+    				Libera a memória alocada dinamicamente pela função ft_pointer_base.
+
+    				Previne vazamentos de memória (memory leaks).
+
+				i) return (len);
+
+    				Retorna o número total de caracteres impressos:
+    				2 (do "0x") + comprimento da string hexadecimal.
+
+    				
+
+        			
+
+
+
+
+
+
+
+				  
+
+
 
 		5.1.8. Se o specifier for '%'
 

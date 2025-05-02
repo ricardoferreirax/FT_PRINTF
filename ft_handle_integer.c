@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:23:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/04/26 23:37:38 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/02 11:40:05 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_handle_integer(va_list args)
 	str = ft_itoa(n);
 	if (!str)
 		return (0);
-	len = ft_print_str(str);
+	len = ft_printstring(str);
 	free(str);
 	return (len);
 }
