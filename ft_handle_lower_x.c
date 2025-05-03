@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:12:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/02 11:40:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:23:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_xdigits(unsigned int num)
+static int	ft_xlowerdigits(unsigned int num)
 {
 	unsigned int	len;
 
@@ -34,7 +34,7 @@ char	*ft_hexlower(unsigned int n)
 	unsigned int	num;
 
 	num = n;
-	x = ft_xdigits(num);
+	x = ft_xlowerdigits(num);
 	str = malloc(sizeof(char) * (x + 1));
 	if (!str)
 		return (NULL);

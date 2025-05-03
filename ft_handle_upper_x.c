@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:14:44 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/02 11:41:17 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:24:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_Xdigits(unsigned int num)
+static int	ft_xupperdigits(unsigned int num)
 {
 	unsigned int	len;
 
@@ -34,7 +34,7 @@ char	*ft_hexupper(unsigned int n)
 	unsigned int	num;
 
 	num = n;
-	x = ft_Xdigits(num);
+	x = ft_xupperdigits(num);
 	str = malloc(sizeof(char) * (x + 1));
 	if (!str)
 		return (NULL);

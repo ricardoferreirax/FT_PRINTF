@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:50:25 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/02 11:39:15 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/03 20:35:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_printf(const char *format, ...)
 {
 	va_list	args;
 	int		len;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	len = 0;
