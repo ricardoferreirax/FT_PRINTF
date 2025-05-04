@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 23:49:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/04 16:42:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/04 21:57:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(void)
 	count[8] = ft_printf("\n9 | Percent sign: %%");
 	count[9] = ft_printf("\n10 | NULL string direct: %s", str);
 	count[10] = ft_printf("\n11 | NULL pointer: %p", ptr);
-	count[11] = ft_printf("\n12 | hello %");
+	count[11] = ft_printf("\nhello%", string);
 	count[12] = ft_printf(NULL);
 	
 

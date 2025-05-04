@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:27:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/04 18:43:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/04 21:44:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	count_basedigits(unsigned long long n, int base_len)
+static int	count_ullbasedigits(unsigned long long n, int base_len)
 {
 	int	count;
 
@@ -28,13 +28,13 @@ static int	count_basedigits(unsigned long long n, int base_len)
 static char	*ft_ulltoabase(unsigned long long n, const char *base)
 {
 	size_t		len;
-	int		digits;
-	char	*str;
+	int			digits;
+	char		*str;
 
 	len = 0;
 	while (base[len])
 		len++;
-	digits = count_basedigits(n, len);
+	digits = count_ullbasedigits(n, len);
 	str = (char *)malloc(sizeof(char) * (digits + 1));
 	if (!str)
 		return (NULL);
