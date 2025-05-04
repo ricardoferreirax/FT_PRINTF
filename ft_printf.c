@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:50:25 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/03 20:35:41 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:41:17 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static int	ft_handle_format(const char c, va_list args)
 	if (c == 'u')
 		return (ft_handle_unsigned(args));
 	if (c == 'x')
-		return (ft_handle_hexlower(args));
+		return (ft_handle_hex(args, "0123456789abcdef"));
 	if (c == 'X')
-		return (ft_handle_hexupper(args));
+		return (ft_handle_hex(args, "0123456789ABCDEF"));
 	if (c == 'p')
 		return (ft_handle_pointer(args));
 	if (c == '%')
@@ -39,11 +39,11 @@ int	ft_printf(const char *format, ...)
 	int		len;
 	int		i;
 
+	if (!format || (format[0] == '%' && format[1] == '\0'))
+		return (-1);
 	i = 0;
 	len = 0;
 	va_start(args, format);
-	if (!format || (format[0] == '%' && format[1] == '\0'))
-		return (-1);
 	while (format[i])
 	{
 		if (format[i] == '%' && format[i + 1])

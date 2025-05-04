@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:38:11 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/02 11:38:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:43:32 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_udigits(unsigned int n)
+static int	count_udigits(unsigned int n)
 {
 	int	len;
 
@@ -27,12 +27,12 @@ static int	ft_udigits(unsigned int n)
 	return (len);
 }
 
-char	*ft_uitoa(unsigned int n)
+static char	*ft_uitoa(unsigned int n)
 {
 	char	*str;
 	int		u;
 
-	u = ft_udigits(n);
+	u = count_udigits(n);
 	str = (char *)malloc(sizeof(char) * (u + 1));
 	if (!str)
 		return (NULL);
@@ -49,12 +49,12 @@ char	*ft_uitoa(unsigned int n)
 
 int	ft_handle_unsigned(va_list args)
 {
-	unsigned int	u;
+	unsigned int	un;
 	char			*str;
 	int				len;
 
-	u = va_arg(args, unsigned int);
-	str = ft_uitoa(u);
+	un = va_arg(args, unsigned int);
+	str = ft_uitoa(un);
 	if (!str)
 		return (0);
 	len = ft_printstring(str);

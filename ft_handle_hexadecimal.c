@@ -1,66 +1,62 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handle_lower_x.c                                :+:      :+:    :+:   */
+/*   ft_handle_hexadecimal.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:12:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/03 20:23:55 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:42:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_xlowerdigits(unsigned int num)
+static int	count_basedigits(unsigned int n, int base_len)
 {
-	unsigned int	len;
+	unsigned int	count;
 
-	len = 0;
-	if (num == 0)
-		return (1);
-	while (num != 0)
+	count = 1;
+	while (n >= (unsigned int)base_len)
 	{
-		num /= 16;
-		len++;
+		n /= base_len;
+		count++;
 	}
-	return (len);
+	return (count);
 }
 
-char	*ft_hexlower(unsigned int n)
+static char	*ft_uitoabase(unsigned int n, const char *base)
 {
-	char			*str;
-	int				x;
-	unsigned int	num;
+	char	*str;
+	int		len;
+	int		digits;
 
-	num = n;
-	x = ft_xlowerdigits(num);
-	str = malloc(sizeof(char) * (x + 1));
+	len = 0;
+	while (base[len] != '\0')
+		len++;
+	digits = count_basedigits(n, len);
+	str = (char *)malloc(sizeof(char) * (digits + 1));
 	if (!str)
 		return (NULL);
-	str[x] = '\0';
+	str[digits] = '\0';
 	if (n == 0)
 		str[0] = '0';
-	while (x > 0)
+	while (n > 0)
 	{
-		x--;
-		if ((num % 16) > 9)
-			str[x] = (num % 16) + 97 - 10;
-		else
-			str[x] = (num % 16) + 48;
-		num /= 16;
+		str[--digits] = base[n % len];
+		n /= len;
 	}
 	return (str);
 }
 
-int	ft_handle_hexlower(va_list args)
+int	ft_handle_hex(va_list args, const char *base)
 {
 	unsigned int	un;
 	char			*str;
 	int				len;
 
 	un = va_arg(args, unsigned int);
-	str = ft_hexlower(un);
+	str = ft_uitoabase(un, base);
 	if (!str)
 		return (0);
 	len = ft_printstring(str);

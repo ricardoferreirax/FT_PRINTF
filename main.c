@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 23:49:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/02 11:43:47 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/04 16:42:36 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 int	main(void)
 {
 	char	letter = 'a';
-	char	*string = "my name is ricardo";
+	char	*string = "hello\0";
 	char	*str = NULL;
 	int		*ptr = NULL;
 	int		number = -255;
 	int		count[13];
 
 	ft_printf("\n_____________FT_PRINTF_____________\n");
-	count[0] = ft_printf("1 | Letter: %c", letter);
-	count[1] = ft_printf("\n2 | String: %s", string);
-	count[2] = ft_printf("\n3 | Number (i): %i", number);
+	count[0] = ft_printf("1 | Letter: %c", letter);	  // 12 + 1 (a)
+	count[1] = ft_printf("\n2 | String: %s", string); //  13 + 5 (hello)
+	count[2] = ft_printf("\n3 | Number (i): %i", number); // 17 + 4 (-255)
 	count[2] = ft_printf("\n3 | Number (d): %d", number);
 	count[3] = ft_printf("\n4 | Unsigned: %u", number);
 	count[4] = ft_printf("\n5 | Hex lower (x): %x", number);
@@ -35,19 +35,11 @@ int	main(void)
 	count[8] = ft_printf("\n9 | Percent sign: %%");
 	count[9] = ft_printf("\n10 | NULL string direct: %s", str);
 	count[10] = ft_printf("\n11 | NULL pointer: %p", ptr);
-	count[11] = ft_printf("%");
+	count[11] = ft_printf("\n12 | hello %");
 	count[12] = ft_printf(NULL);
-	if (count[11] == -1)
-		ft_printf("\n12 | ft_printf(\"%%\") returns -1\n");
-	else
-		ft_printf("\n12 | ERROR: ft_printf(\"%%\") DOESN'T return -1\n");
-		
-	if (count[12] == -1)
-		ft_printf("\n13 | ft_printf(\"NULL\") returns -1\n");
-	else
-		ft_printf("\n13 | ERROR: ft_printf(\"NULL\") DOESN'T return -1\n");
+	
 
-	for (int i = 0; i < 11; i++)
+	for (int i = 0; i < 13; i++)
 		printf("\nft_printf count%d: %d", i + 1, count[i]);
 
 	printf("\n_______________PRINTF______________\n");

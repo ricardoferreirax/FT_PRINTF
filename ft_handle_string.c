@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:17:49 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/02 11:37:58 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:38:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	ft_printstring(const char *str)
 {
-	int	i;
+	int	idx;
 
 	if (!str)
 		return (0);
-	i = 0;
-	while (str[i])
+	idx = 0;
+	while (str[idx])
 	{
-		write(1, &str[i], 1);
-		i++;
+		write(1, &str[idx], 1);
+		idx++;
 	}
-	return (i);
+	return (idx);
 }
 
 int	ft_handle_string(va_list args)

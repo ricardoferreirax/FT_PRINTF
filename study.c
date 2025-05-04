@@ -228,29 +228,45 @@ comportamento de uma função conforme os dados recebidos durante a execução.
 
 int	ft_printf(const char *format, ...)
 {
-	va_list	args;
-	int		len;
-	size_t	i;
+	va_list	args;                // Declara uma variável do tipo va_list para acessar os argumentos variáveis.
+	int		len;                 // Variável que vai acumular o número total de caracteres impressos.
+	size_t	i;                    // Índice usado para percorrer a string 'format'.
 
-	i = 0;
-	len = 0;
-	va_start(args, format);
+	i = 0;                        // Inicializa o índice em 0.
+	len = 0;                      // Inicializa o contador de caracteres impressos em 0.
+	va_start(args, format);       // Inicializa 'args' para começar a ler os argumentos variáveis após 'format'.
+
 	if (!format || (format[0] == '%' && format[1] == '\0'))
-		return (-1);
-	while (format[i])
+		return (-1);              // Se a string 'format' for nula ou se for apenas "%" no fim, retorna erro (-1).
+
+	while (format[i])             // Loop vai percorrer cada caractere da string 'format' até encontrar o caractere nulo '\0'.
 	{
-		if (format[i] == '%' && format[i + 1])
+		if (format[i] == '%' && format[i + 1])       // Se encontrar um '%' seguido de outro caractere (ou seja, é um especificador válido):
 		{
-			i++;
-			len += ft_handle_format(format[i], args);
+			i++;                                     // Avança o índice para o especificador (ex: 'd', 's', etc).
+			len += ft_handle_format(format[i], args); // Chama a função que trata o especificador e soma à contagem total de caracteres.
 		}
-		else
-			len += ft_print_char(format[i]);
-		i++;
+		else                                         // Caso não seja '%', apenas um caractere comum:
+			len += ft_print_char(format[i]);         // Imprime diretamente o caractere e soma 1 à contagem total de caracteres.
+
+		i++;                                         // Avança para o próximo caractere da string 'format'.
 	}
-	va_end(args);
-	return (len);
+
+	va_end(args);                // Finaliza o uso de argumentos variáveis.
+	return (len);                // Retorna o número total de caracteres impressos.
 }
+
+Objetivo: A função ft_printf imprime uma string de formato (format) que pode conter caracteres normais e
+          especificadores de formato (como %d, %s, etc.). Quando encontra um %, chama uma função auxiliar
+		  (ft_handle_format) para tratar desse especificador com os argumentos variáveis passados.
+
+Parâmetro: 
+ 
+   > format: é uma string constante que contém o texto a imprimir. 
+             Ela pode conter caracteres comuns, que serão impressos diretamente ou especificadores de
+			 formato precedidos por % que indicam que deve ser impresso um valor vindo da lista de
+			 argumentos variáveis. 
+
 
 1 - Definição da função - int	ft_printf(const char *format, ...)
 

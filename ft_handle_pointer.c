@@ -6,43 +6,45 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:27:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/02 11:42:17 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/04 18:43:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_xbasedigits(unsigned long long n)
+static int	count_basedigits(unsigned long long n, int base_len)
 {
-	int	len;
+	int	count;
 
-	len = 1;
-	while (n >= 16)
+	count = 1;
+	while (n >= (unsigned long long)base_len)
 	{
-		n /= 16;
-		len++;
+		n /= base_len;
+		count++;
 	}
-	return (len);
+	return (count);
 }
 
-char	*ft_ulltohex(unsigned long long n)
+static char	*ft_ulltoabase(unsigned long long n, const char *base)
 {
-	int			p;
-	char		*str;
-	const char	*base;
+	size_t		len;
+	int		digits;
+	char	*str;
 
-	base = "0123456789abcdef";
-	p = ft_xbasedigits(n);
-	str = (char *)malloc(sizeof(char) * (p + 1));
+	len = 0;
+	while (base[len])
+		len++;
+	digits = count_basedigits(n, len);
+	str = (char *)malloc(sizeof(char) * (digits + 1));
 	if (!str)
 		return (NULL);
-	str[p] = '\0';
+	str[digits] = '\0';
 	if (n == 0)
 		str[0] = '0';
 	while (n > 0)
 	{
-		str[--p] = base[n % 16];
-		n /= 16;
+		str[--digits] = base[n % len];
+		n /= len;
 	}
 	return (str);
 }
@@ -56,7 +58,7 @@ int	ft_handle_pointer(va_list args)
 	addr = va_arg(args, unsigned long long);
 	if (addr == 0)
 		return (ft_printstring("(nil)"));
-	str = ft_ulltohex(addr);
+	str = ft_ulltoabase(addr, "0123456789abcdef");
 	if (!str)
 		return (0);
 	len = ft_printstring("0x");
