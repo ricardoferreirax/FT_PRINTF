@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 21:50:25 by rmedeiro          #+#    #+#             */
-/*   Updated: 2025/05/04 21:43:41 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2025/05/05 01:06:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,24 @@ int	ft_printf(const char *format, ...)
 {
 	va_list	args;
 	int		len;
-	int		i;
+	int		idx;
 
 	if (!format)
 		return (-1);
 	va_start(args, format);
 	len = 0;
-	i = 0;
-	while (format[i])
+	idx = 0;
+	while (format[idx])
 	{
-		if (format[i] == '%')
+		if (format[idx] == '%')
 		{
-			if (!format[i + 1])
+			if (!format[idx + 1])
 				return (va_end(args), -1);
-			len += ft_handle_format(format[++i], args);
+			len += ft_handle_format(format[++idx], args);
 		}
 		else
-			len += ft_printchar(format[i]);
-		i++;
+			len += ft_printchar(format[idx]);
+		idx++;
 	}
 	va_end(args);
 	return (len);
